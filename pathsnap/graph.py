@@ -29,9 +29,77 @@ class RoadGraph:
         # zero weights would vanish in a sparse matrix; use a tiny epsilon instead
         self.matrix = csr_matrix((np.maximum(w, 1e-3), (a[:, 0], a[:, 1])), shape=(self.n_nodes,) * 2)
         self._edge_arc = {(int(u), int(v)): int(i) for (u, v), i in zip(a, ids)}
+        self._reach_cache: dict = {}
+        n = self.n_nodes
+        key = arcs[:, 0] * n + arcs[:, 1]
+        self.reverse_exists = np.isin(arcs[:, 1] * n + arcs[:, 0], key)
+
+    # ------------------------------------------------------------------ fast many-to-many lookups
+    def reach(self, src: int, limit: float):
+        """Nodes reachable from src within ``limit`` metres: (sorted node ids, distances).
+
+        Only reached nodes are stored, so thousands of cached sources stay small in memory.
+        """
+        key = (int(src), float(limit))
+        hit = self._reach_cache.get(key)
+        if hit is None:
+            dist = dijkstra(self.matrix, directed=True, indices=int(src), limit=limit)
+            idx = np.flatnonzero(np.isfinite(dist))
+            hit = (idx, dist[idx])
+            if len(self._reach_cache) > 50_000:
+                self._reach_cache.clear()
+            self._reach_cache[key] = hit
+        return hit
+
+    def node_dist_many(self, src: int, targets: np.ndarray, limit: float) -> np.ndarray:
+        """Driving distance src -> each target node (inf if not reachable within limit)."""
+        idx, d = self.reach(src, limit)
+        pos = np.searchsorted(idx, targets)
+        pos = np.clip(pos, 0, max(len(idx) - 1, 0))
+        out = np.full(len(targets), np.inf)
+        if len(idx):
+            ok = idx[pos] == targets
+            out[ok] = d[pos[ok]]
+        return out
+
+    def arc_distance_matrix(self, arcs_a, t_a, arcs_b, t_b, limit: float, back_tol_m: float = 20.0) -> np.ndarray:
+        """Driving distances from every (arc_a, t_a) to every (arc_b, t_b): shape (len(a), len(b)).
+
+        Same arc moving forward -> distance along the arc; otherwise rest of arc a + node path
+        + first part of arc b. inf where unreachable within limit.
+
+        GPS jitter: a slow or stopped vehicle's fixes often step slightly BACKWARDS. Without a
+        tolerance that looks like a loop around the block (usually unreachable), so the true
+        pair would get -inf. Backward moves up to ``back_tol_m`` along the same arc, or back
+        across the from-node onto the preceding arc in the same direction, are allowed at a
+        cost equal to the backward distance. Switching to the opposite-direction twin arc is
+        NOT covered by this rule.
+        """
+        arcs_a, arcs_b = np.asarray(arcs_a), np.asarray(arcs_b)
+        la, lb = self.length[arcs_a], self.length[arcs_b]
+        to_a, from_b = self.arcs[arcs_a, 1], self.arcs[arcs_b, 0]
+        out = np.empty((len(arcs_a), len(arcs_b)))
+        for i, u in enumerate(to_a):
+            out[i] = (1 - t_a[i]) * la[i] + self.node_dist_many(u, from_b, limit) + t_b * lb
+        same = arcs_a[:, None] == arcs_b[None, :]
+        fwd = same & (t_b[None, :] >= t_a[:, None])
+        out[fwd] = ((t_b[None, :] - t_a[:, None]) * la[:, None])[fwd]
+        if back_tol_m > 0:
+            # backward along the same arc
+            back_same = (t_a[:, None] - t_b[None, :]) * la[:, None]
+            m = same & ~fwd & (back_same <= back_tol_m)
+            out[m] = back_same[m]
+            # backward across a's from-node onto b, where b -> a (b is the arc just before a)
+            from_a, to_b = self.arcs[arcs_a, 0], self.arcs[arcs_b, 1]
+            twin = (from_a[:, None] == to_b[None, :]) & (to_a[:, None] == from_b[None, :])
+            pred = (to_b[None, :] == from_a[:, None]) & ~twin & ~same
+            back_pred = t_a[:, None] * la[:, None] + (1 - t_b[None, :]) * lb[None, :]
+            m = pred & (back_pred <= back_tol_m) & (back_pred < out)
+            out[m] = back_pred[m]
+        return out
 
     # ------------------------------------------------------------------ shortest paths
-    @lru_cache(maxsize=20_000)
+    @lru_cache(maxsize=2_000)
     def _sssp(self, src: int, limit: float):
         dist, pred = dijkstra(self.matrix, directed=True, indices=src, limit=limit, return_predecessors=True)
         return dist, pred

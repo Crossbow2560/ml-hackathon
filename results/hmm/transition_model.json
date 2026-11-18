@@ -1,0 +1,37 @@
+{
+  "features": [
+    "abs_diff_m",
+    "log_ratio",
+    "route_speed_mps",
+    "dt_s",
+    "same_arc",
+    "u_turn",
+    "turn_angle_deg",
+    "log_d_route"
+  ],
+  "coefficients_standardised": {
+    "abs_diff_m": -24.7313,
+    "log_ratio": -0.8775,
+    "route_speed_mps": -0.6066,
+    "dt_s": 0.0021,
+    "same_arc": 0.7029,
+    "u_turn": 1.0316,
+    "turn_angle_deg": -2.7499,
+    "log_d_route": 1.7438,
+    "intercept": -23.86600556352759
+  },
+  "train_pairs": 3760380,
+  "train_steps": 36976,
+  "train_positive_rate": 0.009833048787622527,
+  "student_test_pairs": 464912,
+  "step_every": 5,
+  "fit_seconds": 8.9,
+  "train_auc_learned": 0.9859246006272914,
+  "train_auc_exponential": 0.9543696545204253,
+  "train_true_pair_first_learned": 0.4546733016010385,
+  "train_true_pair_first_exponential": 0.4212732583297274,
+  "student_test_auc_learned": 0.9864698795139493,
+  "student_test_auc_exponential": 0.9607581802687006,
+  "student_test_true_pair_first_learned": 0.4393939393939394,
+  "student_test_true_pair_first_exponential": 0.404649947753396
+}

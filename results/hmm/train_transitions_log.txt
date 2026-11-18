@@ -1,0 +1,90 @@
+train 1/80 pairs so far 20,115 (1s)train 2/80 pairs so far 283,213 (3s)train 3/80 pairs so far 330,330 (3s)train 4/80 pairs so far 345,790 (3s)train 5/80 pairs so far 346,545 (3s)train 6/80 pairs so far 389,144 (4s)train 7/80 pairs so far 489,516 (4s)train 8/80 pairs so far 560,928 (5s)train 9/80 pairs so far 592,263 (6s)train 10/80 pairs so far 597,308 (6s)train 11/80 pairs so far 629,243 (8s)train 12/80 pairs so far 651,137 (8s)train 13/80 pairs so far 718,415 (9s)train 14/80 pairs so far 736,085 (9s)train 15/80 pairs so far 791,402 (10s)train 16/80 pairs so far 800,838 (10s)train 17/80 pairs so far 837,258 (12s)train 18/80 pairs so far 869,235 (13s)train 19/80 pairs so far 872,931 (13s)train 20/80 pairs so far 885,939 (14s)train 21/80 pairs so far 896,805 (14s)train 22/80 pairs so far 907,924 (14s)train 23/80 pairs so far 945,034 (15s)train 24/80 pairs so far 970,527 (16s)train 25/80 pairs so far 1,046,297 (17s)train 26/80 pairs so far 1,072,051 (19s)train 27/80 pairs so far 1,133,297 (20s)train 28/80 pairs so far 1,191,261 (20s)train 29/80 pairs so far 1,249,105 (21s)train 30/80 pairs so far 1,284,623 (21s)train 31/80 pairs so far 1,306,253 (22s)train 32/80 pairs so far 1,343,756 (22s)train 33/80 pairs so far 1,347,870 (22s)train 34/80 pairs so far 1,378,860 (23s)train 35/80 pairs so far 1,543,479 (25s)train 36/80 pairs so far 1,593,135 (26s)train 37/80 pairs so far 1,605,612 (26s)train 38/80 pairs so far 1,612,674 (26s)train 39/80 pairs so far 1,624,614 (27s)train 40/80 pairs so far 1,666,233 (27s)train 41/80 pairs so far 1,686,193 (27s)train 42/80 pairs so far 1,694,364 (27s)train 43/80 pairs so far 1,718,013 (28s)train 44/80 pairs so far 1,767,048 (29s)train 45/80 pairs so far 1,849,885 (30s)train 46/80 pairs so far 1,858,094 (31s)train 47/80 pairs so far 1,885,887 (32s)train 48/80 pairs so far 1,930,291 (32s)train 49/80 pairs so far 1,986,521 (32s)train 50/80 pairs so far 2,126,505 (33s)train 51/80 pairs so far 2,209,808 (34s)train 52/80 pairs so far 2,274,416 (34s)train 53/80 pairs so far 2,307,955 (35s)train 54/80 pairs so far 2,320,543 (36s)train 55/80 pairs so far 2,341,800 (36s)train 56/80 pairs so far 2,431,134 (37s)train 57/80 pairs so far 2,483,901 (37s)train 58/80 pairs so far 2,496,621 (37s)train 59/80 pairs so far 2,560,146 (38s)train 60/80 pairs so far 2,586,158 (38s)train 61/80 pairs so far 2,608,414 (39s)train 62/80 pairs so far 2,673,243 (40s)train 63/80 pairs so far 2,698,456 (41s)train 64/80 pairs so far 2,711,109 (41s)train 65/80 pairs so far 2,757,191 (42s)train 66/80 pairs so far 2,809,238 (43s)train 67/80 pairs so far 2,849,465 (43s)train 68/80 pairs so far 2,994,997 (46s)train 69/80 pairs so far 3,011,025 (46s)train 70/80 pairs so far 3,033,361 (48s)train 71/80 pairs so far 3,087,195 (48s)train 72/80 pairs so far 3,179,528 (49s)train 73/80 pairs so far 3,203,478 (49s)train 74/80 pairs so far 3,416,903 (51s)train 75/80 pairs so far 3,466,286 (51s)train 76/80 pairs so far 3,526,533 (52s)train 77/80 pairs so far 3,593,982 (52s)train 78/80 pairs so far 3,624,900 (53s)train 79/80 pairs so far 3,662,071 (55s)train 80/80 pairs so far 3,760,380 (55s)
+student_test 1/10 pairs so far 20,673 (0s)student_test 2/10 pairs so far 25,361 (1s)student_test 3/10 pairs so far 88,359 (1s)student_test 4/10 pairs so far 108,926 (2s)student_test 5/10 pairs so far 111,249 (2s)student_test 6/10 pairs so far 193,082 (3s)student_test 7/10 pairs so far 213,708 (3s)student_test 8/10 pairs so far 308,264 (4s)student_test 9/10 pairs so far 432,648 (4s)student_test 10/10 pairs so far 464,912 (5s)
+{
+  "features": [
+    "abs_diff_m",
+    "log_ratio",
+    "route_speed_mps",
+    "dt_s",
+    "same_arc",
+    "u_turn",
+    "turn_angle_deg",
+    "log_d_route"
+  ],
+  "coefficients_standardised": {
+    "abs_diff_m": -24.7313,
+    "log_ratio": -0.8775,
+    "route_speed_mps": -0.6066,
+    "dt_s": 0.0021,
+    "same_arc": 0.7029,
+    "u_turn": 1.0316,
+    "turn_angle_deg": -2.7499,
+    "log_d_route": 1.7438,
+    "intercept": -23.86600556352759
+  },
+  "train_pairs": 3760380,
+  "train_steps": 36976,
+  "train_positive_rate": 0.009833048787622527,
+  "student_test_pairs": 464912,
+  "step_every": 5,
+  "fit_seconds": 8.9,
+  "train_auc_learned": 0.9859246006272914,
+  "train_auc_exponential": 0.9543696545204253,
+  "train_true_pair_first_learned": 0.4546733016010385,
+  "train_true_pair_first_exponential": 0.4212732583297274,
+  "student_test_auc_learned": 0.9864698795139493,
+  "student_test_auc_exponential": 0.9607581802687006,
+  "student_test_true_pair_first_learned": 0.4393939393939394,
+  "student_test_true_pair_first_exponential": 0.404649947753396
+}
+context 1/30 (1s)context 2/30 (2s)context 3/30 (4s)context 4/30 (5s)context 5/30 (5s)context 6/30 (6s)context 7/30 (9s)context 8/30 (10s)context 9/30 (11s)context 10/30 (12s)context 11/30 (19s)context 12/30 (22s)context 13/30 (23s)context 14/30 (25s)context 15/30 (27s)context 16/30 (28s)context 17/30 (30s)context 18/30 (31s)context 19/30 (33s)context 20/30 (34s)context 21/30 (35s)context 22/30 (36s)context 23/30 (38s)context 24/30 (40s)context 25/30 (42s)context 26/30 (43s)context 27/30 (50s)context 28/30 (52s)context 29/30 (53s)context 30/30 (56s)
+classifier-only Top-1 on these 30 trips (OOF): 0.8989
+  exponential trial  0 top1=0.9139 best=0.9139
+  exponential trial  1 top1=0.9144 best=0.9144
+  exponential trial  2 top1=0.8832 best=0.9144
+  exponential trial  3 top1=0.9153 best=0.9153
+  exponential trial  4 top1=0.9142 best=0.9153
+  exponential trial  5 top1=0.9153 best=0.9153
+  exponential trial  6 top1=0.9144 best=0.9153
+  exponential trial  7 top1=0.8894 best=0.9153
+  exponential trial  8 top1=0.9134 best=0.9153
+  exponential trial  9 top1=0.9127 best=0.9153
+  exponential trial 10 top1=0.9121 best=0.9153
+  exponential trial 11 top1=0.9146 best=0.9153
+  exponential trial 12 top1=0.9137 best=0.9153
+  exponential trial 13 top1=0.9155 best=0.9155
+  exponential trial 14 top1=0.9106 best=0.9155
+  exponential trial 15 top1=0.9151 best=0.9155
+  exponential trial 16 top1=0.9123 best=0.9155
+  exponential trial 17 top1=0.9142 best=0.9155
+  exponential trial 18 top1=0.9149 best=0.9155
+  exponential trial 19 top1=0.9132 best=0.9155
+  exponential trial 20 top1=0.9143 best=0.9155
+  exponential trial 21 top1=0.9145 best=0.9155
+  exponential trial 22 top1=0.9154 best=0.9155
+  exponential trial 23 top1=0.9150 best=0.9155
+  exponential trial 24 top1=0.8833 best=0.9155
+  exponential trial 25 top1=0.9142 best=0.9155
+  exponential trial 26 top1=0.9154 best=0.9155
+  exponential trial 27 top1=0.9154 best=0.9155
+  exponential trial 28 top1=0.9139 best=0.9155
+  exponential trial 29 top1=0.9144 best=0.9155
+  exponential trial 30 top1=0.9158 best=0.9158
+  exponential trial 31 top1=0.9154 best=0.9158
+  exponential trial 32 top1=0.9137 best=0.9158
+  exponential trial 33 top1=0.9162 best=0.9162
+  exponential trial 34 top1=0.9147 best=0.9162
+  exponential trial 35 top1=0.9152 best=0.9162
+  exponential trial 36 top1=0.8692 best=0.9162
+  exponential trial 37 top1=0.9110 best=0.9162
+  exponential trial 38 top1=0.9148 best=0.9162
+  exponential trial 39 top1=0.9153 best=0.9162
+  learned trial  0 top1=0.9100 best=0.9100
+  learned trial  1 top1=0.9259 best=0.9259
+  learned trial  2 top1=0.9300 best=0.9300
+  learned trial  3 top1=0.8936 best=0.9300
+  learned trial  4 top1=0.9320 best=0.9320
+  learned trial  5 top1=0.8822 best=0.9320
+  learned trial  6 top1=0.9172 best=0.9320
+  learned trial  7 top1=0.9299 best=0.9320
+  learned trial  8 top1=0.9265 best=0.9320
