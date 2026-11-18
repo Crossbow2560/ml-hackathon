@@ -75,14 +75,16 @@ def fmt(v, pct=True):
 
 m = res["metrics"]
 st.subheader(f"Trip {res['trip_id']} — {res['model']['name']} (v{res['model']['version']})")
-c = st.columns(7)
+c = st.columns(4)        # two rows so the values are not truncated on narrower screens
 c[0].metric("Top-1 accuracy", fmt(m["top1"]))
 c[1].metric("Macro-F1", fmt(m["macro_f1"]))
 c[2].metric("Route continuity", fmt(m["route_continuity"]))
-c[3].metric("Route precision", fmt(m["route_precision"]))
-c[4].metric("Route recall", fmt(m["route_recall"]))
-c[5].metric("Route F1", fmt(m["route_f1"]))
-c[6].metric("Candidate miss rate", fmt(m["candidate_miss_rate"]))
+c[3].metric("Candidate miss rate", fmt(m["candidate_miss_rate"]))
+c = st.columns(4)
+c[0].metric("Route precision", fmt(m["route_precision"]))
+c[1].metric("Route recall", fmt(m["route_recall"]))
+c[2].metric("Route F1", fmt(m["route_f1"]))
+c[3].metric("GPS points", fmt(m["n_points"], pct=False))
 
 # ---- map
 gps = res["gps"]
@@ -111,7 +113,7 @@ cmap.add_to(fmap)
 folium.Marker(gps[0], tooltip="start", icon=folium.Icon(color="green", icon="play")).add_to(fmap)
 folium.Marker(gps[-1], tooltip="end", icon=folium.Icon(color="red", icon="stop")).add_to(fmap)
 legend = ('<div style="position:fixed;bottom:24px;left:24px;z-index:9999;background:white;padding:6px 10px;'
-          'border:1px solid #999;border-radius:6px;font:12px sans-serif">'
+          'border:1px solid #999;border-radius:6px;font:12px sans-serif;color:#222">'
           '<span style="color:#1f77b4">━━</span> raw GPS track<br>'
           '<span style="color:#e31a1c">━━</span> predicted route<br>'
           '<span style="color:#2ca02c">●</span>/<span style="color:#d62728">●</span> matched point, high/low confidence</div>')
