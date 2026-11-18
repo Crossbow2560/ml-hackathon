@@ -87,14 +87,20 @@ class Trip:
 
 
 def load_trip(trip_id: str, partition: str, root: str | os.PathLike | None = None,
-              require_route: bool = False, allow_evaluator: bool = False) -> Trip:
-    """Load a trip. Coordinates are kept exactly as stored (lon, lat order)."""
+              require_route: bool = False, allow_evaluator: bool = False,
+              load_route: bool = True) -> Trip:
+    """Load a trip. Coordinates are kept exactly as stored (lon, lat order).
+
+    ``load_route=False`` never opens the .route file (Trip.route is None). The prediction
+    pipeline uses this so reference labels cannot leak into predictions.
+    """
     if partition == EVALUATOR_PARTITION and not allow_evaluator:
         raise PermissionError("evaluator_test may only be read by the API (leakage rule)")
     d = trip_dir(trip_id, partition, root)
     issues: list[str] = []
-    frames = {}
-    for kind in FILE_TYPES:
+    frames = {"route": None}
+    kinds = FILE_TYPES if load_route else tuple(k for k in FILE_TYPES if k != "route")
+    for kind in kinds:
         df, iss = read_table(d / f"{trip_id}.{kind}", kind)
         frames[kind] = df
         issues += iss
@@ -113,3 +119,11 @@ def load_trip(trip_id: str, partition: str, root: str | os.PathLike | None = Non
         raise ValueError(f"trip {trip_id}: route required but missing")
 
     return Trip(trip_id, partition, track.reset_index(drop=True), nodes, arcs, route, issues)
+
+
+def load_trip_dir(path: str | os.PathLike, load_route: bool = True,
+                  allow_evaluator: bool = False) -> Trip:
+    """Load a trip from its folder path ``<root>/<partition>/<trip_id>`` (used by the API)."""
+    p = Path(path).expanduser().resolve()
+    return load_trip(p.name, p.parent.name, root=p.parent.parent, allow_evaluator=allow_evaluator,
+                     load_route=load_route)

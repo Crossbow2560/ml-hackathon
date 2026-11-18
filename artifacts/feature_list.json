@@ -1,0 +1,41 @@
+{
+  "version": "0.1-draft",
+  "status": "DRAFT — final list is fixed in P3; names below are the contract Member 2 codes against",
+  "files": {
+    "train": "data_cache/features_train.parquet",
+    "student_test": "data_cache/features_student_test.parquet"
+  },
+  "row_definition": "one row per (GPS observation, candidate arc) pair; candidates = directed arcs within radius_m of the point, at most max_k nearest",
+  "id_columns": [
+    {"name": "trip_id", "dtype": "string", "description": "8-digit trip folder name; GroupKFold groups on this"},
+    {"name": "obs_idx", "dtype": "int32", "description": "row index of the GPS point in the .track file; (trip_id, obs_idx) identifies an observation / ranking group"},
+    {"name": "cand_arc", "dtype": "int32", "description": "candidate arc id, local to the trip (never used as a feature)"}
+  ],
+  "target_columns": [
+    {"name": "label", "dtype": "int8", "description": "1 if cand_arc is the reference arc aligned to this point by the monotonic DP (labels.py), else 0; at most one 1 per observation"},
+    {"name": "unreliable", "dtype": "bool", "description": "True if the aligned reference arc is > unreliable_m (50 m) from the point (off-network dwell, route mismatch); drop these rows before training and scoring"}
+  ],
+  "features": [
+    {"name": "dist_m", "dtype": "float32", "unit": "m", "phase": "P2", "description": "perpendicular distance from the GPS point to the candidate arc"},
+    {"name": "dist_rank", "dtype": "float32", "unit": "rank", "phase": "P3", "description": "rank of dist_m among this observation's candidates (0 = nearest)"},
+    {"name": "dist_minus_min_m", "dtype": "float32", "unit": "m", "phase": "P3", "description": "dist_m minus the smallest dist_m of the observation"},
+    {"name": "softmin_share", "dtype": "float32", "unit": "prob", "phase": "P3", "description": "exp(-dist_m/sigma) normalised over the observation's candidates (sigma = 10 m draft)"},
+    {"name": "n_candidates", "dtype": "float32", "unit": "count", "phase": "P3", "description": "number of candidates of this observation (local road density)"},
+    {"name": "proj_t", "dtype": "float32", "unit": "0..1", "phase": "P2", "description": "position of the projection along the arc (0 = from-node, 1 = to-node)"},
+    {"name": "arc_length_m", "dtype": "float32", "unit": "m", "phase": "P3", "description": "length of the candidate arc"},
+    {"name": "arc_two_way", "dtype": "float32", "unit": "0/1", "phase": "P3", "description": "1 if the reverse arc also exists"},
+    {"name": "from_in_degree", "dtype": "float32", "unit": "count", "phase": "P3", "description": "in-degree of the arc's from-node (junction complexity)"},
+    {"name": "to_out_degree", "dtype": "float32", "unit": "count", "phase": "P3", "description": "out-degree of the arc's to-node (junction complexity)"},
+    {"name": "heading_diff_deg", "dtype": "float32", "unit": "deg 0..180", "phase": "P3", "description": "angle between the smoothed GPS heading (points t-2..t+2) and the arc bearing; separates the two directions of a two-way road"},
+    {"name": "heading_valid", "dtype": "float32", "unit": "0/1", "phase": "P3", "description": "1 if the vehicle moved enough (> 2 m over the window) for the GPS heading to be meaningful"},
+    {"name": "speed_mps", "dtype": "float32", "unit": "m/s", "phase": "P3", "description": "smoothed GPS speed over points t-2..t+2"},
+    {"name": "dt_prev_s", "dtype": "float32", "unit": "s", "phase": "P3", "description": "time since the previous GPS point (large = after a gap)"},
+    {"name": "window_mean_dist_m", "dtype": "float32", "unit": "m", "phase": "P3", "description": "mean distance of points t-3..t+3 to this arc (temporal consistency)"},
+    {"name": "window_min_dist_m", "dtype": "float32", "unit": "m", "phase": "P3", "description": "min distance of points t-3..t+3 to this arc"}
+  ],
+  "excluded_on_purpose": [
+    "absolute lon/lat or UTM coordinates (trips are worldwide; would not generalise)",
+    "node / arc ids (local to each trip)",
+    "anything derived from .route (leakage)"
+  ]
+}
