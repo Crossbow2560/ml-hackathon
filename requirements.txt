@@ -27,3 +27,4 @@ requests>=2.31
 # UI (Laptop 2 also has its own ui/requirements.txt)
 streamlit>=1.33
 streamlit-folium>=0.19
+markdown>=3.5   # report build (report/build_report.py)

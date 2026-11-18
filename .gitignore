@@ -23,3 +23,7 @@ __pycache__/
 
 # --- analysis maps: regenerate with scripts/analysis/06_visualise_trip.py (PNGs are kept) ---
 results/analysis/*/maps/*.html
+
+# --- report build intermediates (rebuild with python -m report.build_report) ---
+report/report_filled.md
+report/PathSnap_Report.html
