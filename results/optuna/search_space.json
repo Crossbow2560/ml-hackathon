@@ -1,0 +1,56 @@
+{
+  "model": "lgbm_rank",
+  "space": {
+    "n_estimators": [
+      "int",
+      100,
+      800
+    ],
+    "learning_rate": [
+      "float",
+      0.01,
+      0.2,
+      true
+    ],
+    "num_leaves": [
+      "int",
+      15,
+      255,
+      true
+    ],
+    "min_child_samples": [
+      "int",
+      10,
+      300,
+      true
+    ],
+    "subsample": [
+      "float",
+      0.5,
+      1.0
+    ],
+    "colsample_bytree": [
+      "float",
+      0.5,
+      1.0
+    ],
+    "reg_lambda": [
+      "float",
+      0.001,
+      10.0,
+      true
+    ]
+  },
+  "fixed": {
+    "subsample_freq": 1
+  },
+  "objective": "mean macro-F1, GroupKFold(5) by trip, train partition",
+  "sampler": "TPESampler(seed=42)",
+  "pruner": "MedianPruner(n_startup_trials=8, n_warmup_steps=1)",
+  "n_trials": 60,
+  "thin_every": 4,
+  "search_rows": 431920,
+  "n_complete": 32,
+  "n_pruned": 28,
+  "search_seconds": 1793.0
+}

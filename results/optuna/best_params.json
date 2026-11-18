@@ -1,0 +1,15 @@
+{
+  "model": "lgbm_rank",
+  "best_cv_macro_f1_thinned": 0.9377580483352516,
+  "best_trial": 12,
+  "params": {
+    "n_estimators": 639,
+    "learning_rate": 0.015881620809513563,
+    "num_leaves": 15,
+    "min_child_samples": 90,
+    "subsample": 0.698333677038016,
+    "colsample_bytree": 0.6401263103073678,
+    "reg_lambda": 0.011403996439971694,
+    "subsample_freq": 1
+  }
+}
