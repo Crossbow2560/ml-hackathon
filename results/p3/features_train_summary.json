@@ -1,0 +1,13 @@
+{
+  "rows": 1772015,
+  "observations": 190187,
+  "points_without_candidates": 18230,
+  "nan_values": 0,
+  "max_candidates_per_obs": 30,
+  "max_positives_per_obs": 1,
+  "positive_rate_rows": 0.10446074102081529,
+  "unreliable_obs_share": 0.026489718014375274,
+  "reliable_obs_with_positive": 0.9997677546192526,
+  "nearest_is_label_reliable": 0.5596141486046373,
+  "build_seconds": 19.0
+}

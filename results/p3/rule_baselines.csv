@@ -1,0 +1,7 @@
+partition,rule,top1
+train,nearest,0.5596
+train,nearest_heading,0.8492
+train,window_heading,0.8253
+student_test,nearest,0.545
+student_test,nearest_heading,0.8497
+student_test,window_heading,0.8295
