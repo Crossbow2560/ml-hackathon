@@ -1,0 +1,29 @@
+version: 1.0.20261118
+classifier:
+  name: lgbm_rank_tuned
+  file: classifier.joblib
+  params:
+    n_estimators: 639
+    learning_rate: 0.015881620809513563
+    num_leaves: 15
+    min_child_samples: 90
+    subsample: 0.698333677038016
+    colsample_bytree: 0.6401263103073678
+    reg_lambda: 0.011403996439971694
+    subsample_freq: 1
+candidates:
+  radius_m: 50
+  max_k: 30
+labels:
+  unreliable_m: 50
+hmm:
+  transition: learned
+  file: transition.joblib
+  alpha: 3.091596252155782
+  weight: 3.790705196905447
+  gap_s: 60.0
+  v_max_mps: 50.0
+  chosen_by: best decoder-tuning Top-1 on train OOF scores
+  train_top1:
+    learned: 0.9337562032571468
+    exponential: 0.9161948696442301
