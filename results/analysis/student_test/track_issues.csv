@@ -1,0 +1,11 @@
+trip_id,n_points,n_nan_rows,n_inf_rows,n_out_of_range,share_in_network_bbox,share_in_bbox_if_swapped,lonlat_swap_suspected,n_duplicate_rows,n_duplicate_t,n_non_monotonic_t,n_zero_dt,n_non_integer_dt,n_speed_gt_70mps,load_issues
+00000000,2503,0,0,0,1.0,0.0,False,0,0,0,0,0,0,
+00000007,1354,0,0,0,1.0,0.0,False,0,0,0,0,0,0,
+00000009,1049,0,0,0,1.0,0.0,False,0,0,0,0,0,0,
+00000040,2995,0,0,0,1.0,0.0,False,0,0,0,0,0,1,
+00000052,262,0,0,0,1.0,0.0,False,0,0,0,0,0,0,
+00000056,3958,0,0,0,1.0,0.0,False,0,0,0,0,0,0,
+00000065,768,0,0,0,1.0,0.0,False,0,0,0,0,0,0,
+00000076,1486,0,0,0,1.0,0.0,False,0,0,0,0,0,0,
+00000077,3911,0,0,0,1.0,0.0,False,0,0,0,0,0,0,
+00000091,874,0,0,0,1.0,0.0,False,0,0,0,0,0,0,
