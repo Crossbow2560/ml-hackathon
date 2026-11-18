@@ -52,3 +52,40 @@ Maps are written to `results/analysis/<partition>/maps/<trip_id>.html` (and `.pn
 | `artifacts/` | exported final model + config used by the API |
 | `results/` | CSVs, logs, plots, folium maps |
 | `report/` | technical report sources and figures |
+
+## Two-laptop deployment (evaluation)
+
+| Laptop | Runs | Needs |
+|---|---|---|
+| **Laptop 1 — API** | `api/main.py` (FastAPI): full pipeline + server-side scoring | repo, `requirements.txt`, `artifacts/`, dataset incl. `evaluator_test/` |
+| **Laptop 2 — UI** | `ui/app.py` (Streamlit): trip picker, map, scores | `ui/` only, `ui/requirements.txt` |
+
+Both laptops must be on the same network (Wi-Fi or a phone hotspot).
+
+**Laptop 1 (API)**
+
+```bash
+source .venv/bin/activate
+export PATHSNAP_DATA_DIR=/path/to/dataset          # contains evaluator_test/
+export PATHSNAP_EVAL_PARTITION=evaluator_test      # use student_test to rehearse
+python -m api.main                                 # listens on 0.0.0.0:8000
+```
+
+Find its LAN address (`ip -4 addr` on Linux, `ipconfig` on Windows, `ipconfig getifaddr en0` on macOS) and allow
+incoming TCP 8000 in the firewall (Linux `sudo ufw allow 8000/tcp`; Windows: allow Python on private networks).
+Every request is printed in this terminal (`<time> <client ip> POST /match trip=<id> status=200 <ms> ms` plus a
+metrics line) — show this window to the evaluator.
+
+**Laptop 2 (UI)**
+
+```bash
+pip install -r ui/requirements.txt
+export PATHSNAP_API_URL=http://<laptop-1-ip>:8000  # or type it in the sidebar
+streamlit run ui/app.py
+```
+
+In the browser: *Check connection* → pick one of the 10 trips → *Run map-matching*. The map shows the raw GPS track,
+the predicted route and matched points coloured by confidence; the cards show the scores computed on Laptop 1.
+The reference routes never leave Laptop 1.
+
+Test without model files: `PATHSNAP_USE_MOCK=1 python -m api.main` (nearest-arc stand-in).

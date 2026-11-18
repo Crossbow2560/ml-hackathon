@@ -1,0 +1,5 @@
+# Laptop 2 (UI only) — install with: pip install -r ui/requirements.txt
+streamlit>=1.33
+streamlit-folium>=0.19
+folium>=0.16
+requests>=2.31
