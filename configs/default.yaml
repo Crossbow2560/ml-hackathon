@@ -14,8 +14,8 @@ partitions:
   evaluator_test: evaluator_test   # API only
 
 candidates:
-  radius_m: 50          # (P0) candidate search radius
-  max_k: 20             # (P0) keep at most K nearest arcs per GPS point
+  radius_m: 50          # P2: R=25 misses 3.6% of train points; 50 keeps all reliable labels (results/p2)
+  max_k: 30             # P2: K=20 misses 1.07% (dense networks), K=30 0.04%, ~8.5 candidates/point
 
 labels:
   unreliable_m: 50      # (P0) aligned distance above which a label is untrusted
