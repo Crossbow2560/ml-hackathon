@@ -1,0 +1,25 @@
+# Shared configuration for PathSnap. Values marked (P0) are revisited after the
+# Phase 0 dataset analysis (see results/analysis/<partition>/DATASET_REPORT.md).
+seed: 42
+
+paths:
+  data_dir: dataset            # overridden by env PATHSNAP_DATA_DIR
+  results_dir: results
+  cache_dir: data_cache
+  artifacts_dir: artifacts
+
+partitions:
+  train: train
+  student_test: student_test
+  evaluator_test: evaluator_test   # API only
+
+candidates:
+  radius_m: 50          # (P0) candidate search radius
+  max_k: 20             # (P0) keep at most K nearest arcs per GPS point
+
+labels:
+  unreliable_m: 50      # (P0) aligned distance above which a label is untrusted
+
+hmm:
+  gap_s: 60             # (P0) split the chain when consecutive points are further apart in time
+  v_max_mps: 50         # max plausible speed used to bound shortest-path search

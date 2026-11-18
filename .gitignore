@@ -1,0 +1,25 @@
+# --- data: never committed (download instructions in dataset/README.md) ---
+dataset/*
+!dataset/README.md
+data_cache/
+
+# --- large / regenerable outputs ---
+results/models/*.joblib
+results/**/*.parquet
+*.joblib
+!artifacts/*.joblib
+
+# --- python / env ---
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+
+# --- editor / OS ---
+.vscode/
+.idea/
+.DS_Store
+
+# --- analysis maps: regenerate with scripts/analysis/06_visualise_trip.py (PNGs are kept) ---
+results/analysis/*/maps/*.html
